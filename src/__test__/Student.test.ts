@@ -20,4 +20,49 @@ describe('Student test suite', () => {
         student.setBirthDate( new Date('2020-10-01') );
         expect(student.getAge(new Date('2021-09-30'))).toBe(0);
     });
+
+    test('氏名が設定されていない状態でgetFullNameを呼ぶと例外がスローされる',() => {
+        let student = new Student();
+        try{
+            student.getFullName();
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty('message', "Student\'s given and/or family name is not set.");
+        }
+    });
+    test('氏名が設定されていない状態でgetFullNameを呼ぶと例外がスローされる(関数内でgetFullName)', ()=>{
+        function expectError(){
+            let student = new Student();
+            student.getFullName();
+        }
+        expect(expectError).toThrow(); 
+        //toThrow() の引数を省略すると、例外がスローされていることのみを確認する
+    });
+    test('氏名が設定されていない状態でgetFullNameを呼ぶと例外がスローされる(無名関数内でgetFullName)', ()=>{
+        expect(() => {
+            let student = new Student();
+            student.getFullName();
+        }).toThrow("Student\'s given and/or family name is not set."); 
+        //toThrow() の引数に文字列を設定すると、例外のメッセージも確認する
+    });
+
+    test('生年月日が設定されていない状態でgetFullNameを呼ぶと例外がスローされる',() => {
+        let student = new Student();
+        try{
+            student.getBirthDate();
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty('message', "Student\'s birth date is not set.");
+        }
+    });
+    test('生年月日が設定されていない状態でgetFullNameを呼ぶと例外がスローされる',() => {
+        let student = new Student();
+        try{
+            student.getAge(new Date('2021-10-01'));
+        } catch(error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty('message', "Student\'s birth date is not set.");
+        }
+    });
+
 });

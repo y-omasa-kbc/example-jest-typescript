@@ -30,15 +30,24 @@ export class Student {
     }
 
     getFullName(): string {
+        if(!this.givenName || !this.familyName){
+            throw new Error("Student\'s given and/or family name is not set.");
+        }            
         return this.familyName + ' ' + this.givenName;
     }
 
     getBirthDate(): Date {
+        if(!this.birthDate){
+            throw new Error("Student\'s birth date is not set.");
+        }
         return this.birthDate;
     }
 
     //指定した日付の時の年齢を返すメソッド
     getAge( dateAt: Date): number {
+        if(!this.birthDate){
+            throw new Error("Student\'s birth date is not set.");
+        }
         var age = dateAt.getFullYear() - this.birthDate.getFullYear();
 
         //今年の誕生日
